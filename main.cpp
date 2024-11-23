@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
 
     int numtasks, rank, rc;
 
+    setenv("MV2_USE_RDMA_CM", "0", 1);
     rc = MPI_Init(&argc, &argv);
 
     // if (rc != MPI_SUCCESS)
