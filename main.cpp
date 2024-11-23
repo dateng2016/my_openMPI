@@ -23,15 +23,17 @@ int main(int argc, char* argv[])
 
     int numtasks, rank, rc;
 
+    // * Disable warning
     setenv("MV2_SUPPRESS_JOB_STARTUP_PERFORMANCE_WARNING", "1", 1);
     setenv("MV2_USE_RDMA_CM", "0", 1);
+
     rc = MPI_Init(&argc, &argv);
 
-    // if (rc != MPI_SUCCESS)
-    // {
-    //     printf("Error starting MPI program. Terminating.\n");
-    //     MPI_Abort(MPI_COMM_WORLD, rc);
-    // }
+    if (rc != MPI_SUCCESS)
+    {
+        printf("Error starting MPI program. Terminating.\n");
+        MPI_Abort(MPI_COMM_WORLD, rc);
+    }
 
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
