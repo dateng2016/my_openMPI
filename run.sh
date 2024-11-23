@@ -1,1 +1,1 @@
-git pull && mpic++ $1 utils.cpp && srun a.out
+git pull && mpic++ utils.cpp $1 && srun a.out
