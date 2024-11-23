@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
     int numtasks, rank, rc;
 
-    // rc = MPI_Init(&argc, &argv);
+    rc = MPI_Init(&argc, &argv);
 
     // if (rc != MPI_SUCCESS)
     // {
