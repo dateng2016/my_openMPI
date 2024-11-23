@@ -1,0 +1,1 @@
+mpic++ $1 && srun a.out
