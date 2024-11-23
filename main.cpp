@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
     int numtasks, rank, rc;
 
-    setenv("MV2_SUPPRESS>JOB_STARTUP_PERFORMANCE_WARNING", "1", 1);
+    setenv("MV2_SUPPRESS_JOB_STARTUP_PERFORMANCE_WARNING", "1", 1);
     rc = MPI_Init(&argc, &argv);
 
     // if (rc != MPI_SUCCESS)
