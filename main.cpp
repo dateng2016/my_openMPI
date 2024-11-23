@@ -1,12 +1,18 @@
 #include "mpi.h"
+#include "utils.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     int P = 1, N = 1000000;
+    // * P determines which function to use.
+    // * N is the number of random samples to generate.
+
+    // * Load the command line arguments
     for (int i = 1; i < argc; i++)
     {
         if (std::string(argv[i]) == "-P")
@@ -55,6 +61,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    // * Print out the command line arguments
     cout << "P = " << P << ". N = " << N << "." << endl;
 
     int numtasks, rank, rc;

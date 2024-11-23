@@ -1,1 +1,1 @@
-git pull && mpic++ $1 && srun a.out
+git pull && mpic++ $1 utils.h && srun a.out
