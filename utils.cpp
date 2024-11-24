@@ -23,7 +23,7 @@ double estimate_integral_2(int num_samples)
     for (int i = 0; i < num_samples; ++i)
     {
         double x = static_cast<double>(rand()) / RAND_MAX;
-        result += exp(-x) + 1;
+        result += exp(-x * x);
     }
     return result / num_samples;
 }
