@@ -61,9 +61,6 @@ int main(int argc, char* argv[])
         }
     }
 
-    // * Print out the command line arguments
-    cout << "P = " << P << ". N = " << N << "." << endl;
-
     int numtasks, rank, rc;
 
     // * Disable warning
@@ -81,7 +78,6 @@ int main(int argc, char* argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    printf("Number of tasks= %d My rank= %d\n", numtasks, rank);
     MPI_Status status;
 
     srand(time(0) + rank);
@@ -120,15 +116,13 @@ int main(int argc, char* argv[])
         global_estimate /= numtasks; // Average the results from all processors
         if (P == 1)
         {
-            std::cout << "Estimated value of integral 1: " << global_estimate
+            std::cout << "The estimate for integral 1 is " << global_estimate
                       << std::endl;
-            std::cout << "Expected value: " << 1.0 / 3.0 << std::endl;
         }
         else if (P == 2)
         {
-            std::cout << "Estimated value of integral 2: " << global_estimate
+            std::cout << "The estimate for integral 2 is " << global_estimate
                       << std::endl;
-            std::cout << "Expected value: 0.7468" << std::endl;
         }
     }
 
