@@ -135,5 +135,7 @@ int main(int argc, char* argv[])
     // Finalize MPI
     MPI_Finalize();
 
+    cout << "Bye!" << endl;
+
     return 0;
 }
