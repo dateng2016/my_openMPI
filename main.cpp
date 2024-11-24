@@ -1,3 +1,10 @@
+/*
+Author: Da Teng
+Class: ECE6122
+Last Date Modified: 11/24/2024
+Description: This is the main file for the Lab
+*/
+
 #include "mpi.h"
 #include "utils.h"
 #include <iostream>
@@ -81,28 +88,28 @@ int main(int argc, char* argv[])
     MPI_Status status;
 
     srand(time(0) + rank);
-    int samples_per_processor;
+    int samplesPerProcessor;
     if (rank == 0)
     { // Number of samples each processor should handle
-        samples_per_processor = N / numtasks;
+        samplesPerProcessor = N / numtasks;
     }
 
-    MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&samplesPerProcessor, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     if (rank == numtasks - 1)
     {
-        samples_per_processor += N % numtasks;
+        samplesPerProcessor += N % numtasks;
     }
 
     // Estimate the integral locally
     double local_estimate = 0.0;
     if (P == 1)
     {
-        local_estimate = estimate_integral_1(samples_per_processor);
+        local_estimate = estimateIntegral1(samplesPerProcessor);
     }
     else if (P == 2)
     {
-        local_estimate = estimate_integral_2(samples_per_processor);
+        local_estimate = estimateIntegral2(samplesPerProcessor);
     }
 
     // Reduce all local estimates to the root processor (rank 0)
