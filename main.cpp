@@ -8,7 +8,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    hello();
     int P = 1, N = 1000000;
     // * P determines which function to use.
     // * N is the number of random samples to generate.
