@@ -88,15 +88,31 @@ int main(int argc, char* argv[])
     // Number of samples each processor should handle
     int samples_per_processor = N / numtasks;
 
+    // Array to store local random samples
+    double* local_samples = new double[samples_per_processor];
+
+    // Generate random numbers on each processor
+    for (int i = 0; i < samples_per_processor; i++)
+    {
+        local_samples[i] =
+            rand() / (RAND_MAX + 1.0); // Uniform random between 0 and 1
+    }
+
+    // Broadcast the random samples to all processors
+    MPI_Bcast(local_samples, samples_per_processor, MPI_DOUBLE, 0,
+              MPI_COMM_WORLD);
+
     // Estimate the integral locally
     double local_estimate = 0.0;
     if (P == 1)
     {
-        local_estimate = estimate_integral_1(samples_per_processor);
+        local_estimate =
+            estimate_integral_1(local_samples, samples_per_processor);
     }
     else if (P == 2)
     {
-        local_estimate = estimate_integral_2(samples_per_processor);
+        local_estimate =
+            estimate_integral_2(local_samples, samples_per_processor);
     }
 
     // Reduce all local estimates to the root processor (rank 0)
@@ -121,6 +137,9 @@ int main(int argc, char* argv[])
             std::cout << "Expected value: 0.7468" << std::endl;
         }
     }
+
+    // Clean up
+    delete[] local_samples;
 
     // Finalize MPI
     MPI_Finalize();
