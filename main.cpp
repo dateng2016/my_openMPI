@@ -91,11 +91,6 @@ int main(int argc, char* argv[])
         samples_per_processor = N / numtasks;
         MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
     }
-    else
-    {
-        MPI_Recv(&samples_per_processor, 1, MPI_INT, 0, 0, MPI_COMM_WORLD,
-                 &status);
-    }
 
     if (rank == numtasks - 1)
     {
