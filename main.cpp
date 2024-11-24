@@ -83,5 +83,48 @@ int main(int argc, char* argv[])
 
     printf("Number of tasks= %d My rank= %d\n", numtasks, rank);
 
+    srand(time(0) + rank);
+
+    // Number of samples each processor should handle
+    int samples_per_processor = N / size;
+
+    // Estimate the integral locally
+    double local_estimate = 0.0;
+    if (P == 1)
+    {
+        local_estimate = estimate_integral_1(samples_per_processor);
+    }
+    else if (P == 2)
+    {
+        local_estimate = estimate_integral_2(samples_per_processor);
+    }
+
+    // Reduce all local estimates to the root processor (rank 0)
+    double global_estimate = 0.0;
+    MPI_Reduce(&local_estimate, &global_estimate, 1, MPI_DOUBLE, MPI_SUM, 0,
+               MPI_COMM_WORLD);
+
+    // The root processor prints the result
+    if (rank == 0)
+    {
+        global_estimate /= size; // Average the results from all processors
+        if (P == 1)
+        {
+            std::cout << "Estimated value of integral 1: " << global_estimate
+                      << std::endl;
+            std::cout << "Expected value (1/3): " << 1.0 / 3.0 << std::endl;
+        }
+        else if (P == 2)
+        {
+            std::cout << "Estimated value of integral 2: " << global_estimate
+                      << std::endl;
+            std::cout << "Expected value (1 - exp(-1)): " << 1.0 - exp(-1)
+                      << std::endl;
+        }
+    }
+
+    // Finalize MPI
+    MPI_Finalize();
+
     return 0;
 }
