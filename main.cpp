@@ -102,33 +102,33 @@ int main(int argc, char* argv[])
     }
 
     // Estimate the integral locally
-    double local_estimate = 0.0;
+    double localEstimate = 0.0;
     if (P == 1)
     {
-        local_estimate = estimateIntegral1(samplesPerProcessor);
+        localEstimate = estimateIntegral1(samplesPerProcessor);
     }
     else if (P == 2)
     {
-        local_estimate = estimateIntegral2(samplesPerProcessor);
+        localEstimate = estimateIntegral2(samplesPerProcessor);
     }
 
     // Reduce all local estimates to the root processor (rank 0)
-    double global_estimate = 0.0;
-    MPI_Reduce(&local_estimate, &global_estimate, 1, MPI_DOUBLE, MPI_SUM, 0,
+    double globalEstimate = 0.0;
+    MPI_Reduce(&localEstimate, &globalEstimate, 1, MPI_DOUBLE, MPI_SUM, 0,
                MPI_COMM_WORLD);
 
     // The root processor prints the result
     if (rank == 0)
     {
-        global_estimate /= numtasks; // Average the results from all processors
+        globalEstimate /= numtasks; // Average the results from all processors
         if (P == 1)
         {
-            std::cout << "The estimate for integral 1 is " << global_estimate
+            std::cout << "The estimate for integral 1 is " << globalEstimate
                       << std::endl;
         }
         else if (P == 2)
         {
-            std::cout << "The estimate for integral 2 is " << global_estimate
+            std::cout << "The estimate for integral 2 is " << globalEstimate
                       << std::endl;
         }
     }
