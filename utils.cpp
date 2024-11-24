@@ -26,3 +26,4 @@ double estimate_integral_2(int num_samples)
         result += exp(-x); // f(x) = exp(-x)
     }
     return result / num_samples;
+}
