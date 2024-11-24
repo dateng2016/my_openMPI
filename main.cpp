@@ -135,7 +135,10 @@ int main(int argc, char* argv[])
     // Finalize MPI
     MPI_Finalize();
 
-    cout << "Bye!" << endl;
+    if (rank == 0)
+    {
+        cout << "Bye!" << endl;
+    }
 
     return 0;
 }
