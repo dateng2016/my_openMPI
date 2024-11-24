@@ -112,14 +112,13 @@ int main(int argc, char* argv[])
         {
             std::cout << "Estimated value of integral 1: " << global_estimate
                       << std::endl;
-            std::cout << "Expected value (1/3): " << 1.0 / 3.0 << std::endl;
+            std::cout << "Expected value: " << 1.0 / 3.0 << std::endl;
         }
         else if (P == 2)
         {
             std::cout << "Estimated value of integral 2: " << global_estimate
                       << std::endl;
-            std::cout << "Expected value (1 - exp(-1)): " << 1.0 - exp(-1)
-                      << std::endl;
+            std::cout << "Expected value: 0.7468" << std::endl;
         }
     }
 
