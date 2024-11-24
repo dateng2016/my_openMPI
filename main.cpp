@@ -89,8 +89,9 @@ int main(int argc, char* argv[])
     if (rank == 0)
     { // Number of samples each processor should handle
         samples_per_processor = N / numtasks;
-        MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
     }
+
+    MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     if (rank == numtasks - 1)
     {
