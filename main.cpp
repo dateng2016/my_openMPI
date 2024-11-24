@@ -82,11 +82,25 @@ int main(int argc, char* argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     printf("Number of tasks= %d My rank= %d\n", numtasks, rank);
+    MPI_Status status;
 
     srand(time(0) + rank);
+    int samples_per_processor;
+    if (rank == 0)
+    { // Number of samples each processor should handle
+        samples_per_processor = N / numtasks;
+        MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    }
+    else
+    {
+        MPI_Recv(&samples_per_processor, 1, MPI_INT, 0, 0, MPI_COMM_WORLD,
+                 &status);
+    }
 
-    // Number of samples each processor should handle
-    int samples_per_processor = N / numtasks;
+    if (rank == numtasks - 1)
+    {
+        samples_per_processor += N % numtasks;
+    }
 
     // Estimate the integral locally
     double local_estimate = 0.0;
