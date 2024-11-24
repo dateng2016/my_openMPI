@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
     srand(time(0) + rank);
 
     // Number of samples each processor should handle
-    int samples_per_processor = N / size;
+    int samples_per_processor = N / numtasks;
 
     // Estimate the integral locally
     double local_estimate = 0.0;
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
     // The root processor prints the result
     if (rank == 0)
     {
-        global_estimate /= size; // Average the results from all processors
+        global_estimate /= numtasks; // Average the results from all processors
         if (P == 1)
         {
             std::cout << "Estimated value of integral 1: " << global_estimate
