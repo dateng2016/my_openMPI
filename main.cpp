@@ -85,15 +85,8 @@ int main(int argc, char* argv[])
 
     srand(time(0) + rank);
 
-    int samples_per_processor;
-
-    if (rank == 0)
-    {
-        // Number of samples each processor should handle
-        samples_per_processor = N / numtasks;
-        // Broadcast the number of samples to all processors
-        MPI_Bcast(&samples_per_processor, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    }
+    // Number of samples each processor should handle
+    int samples_per_processor = N / numtasks;
 
     // Estimate the integral locally
     double local_estimate = 0.0;
